@@ -1,0 +1,42 @@
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+
+type productType = {
+  id: number;
+  title: string;
+  description: string;
+  images: string[];
+};
+type ResponseType = {
+  item: productType[];
+  loading: boolean;
+};
+// initialstate
+const initialState: ResponseType = {
+  item: [],
+  loading: false,
+};
+// fetch data
+export const getProductData = createAsyncThunk(
+  "product/fetchProduct",
+  async () => {
+    const response = await fetch(" https://api.escuelajs.co/api/v1/products");
+    return response.json();
+  },
+);
+// create slice
+const productSlice = createSlice({
+  name: "product",
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(getProductData.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getProductData.fulfilled, (state, action) => {
+      state.loading = false;
+      state.item = action.payload;
+    });
+  },
+});
+
+export default productSlice.reducer;
