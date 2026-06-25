@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import counter from "../lib/feature/counter/counterSlice";
 import product from "../lib/feature/product/productSlice";
-import { ecommerceApi } from "./feature/api/ecommerceApi";
+import { ecommerceApi } from "./api";
 
 export const makeStore = () => {
   return configureStore({
